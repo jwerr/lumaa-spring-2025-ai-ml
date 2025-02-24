@@ -1,91 +1,168 @@
-# AI/Machine Learning Intern Challenge: Simple Content-Based Recommendation
+Content-Based Movie Recommendation System
 
-**Deadline**: Sunday, Feb 23th 11:59 pm PST
+This is a content-based recommendation system that suggests movies based on a user's textual input. The system uses TF-IDF vectorization and cosine similarity to find the most relevant movies from a dataset.
 
----
+Overview
 
-## Overview
+The goal of this project is to build a simple yet functional content-based recommendation system. Given a short text description of a user’s preferences, the system suggests similar items (e.g., movies) from a small dataset. The system processes the user's input, compares it to the dataset, and returns the top 3–5 closest matches.
 
-Build a **content-based recommendation system** that, given a **short text description** of a user’s preferences, suggests **similar items** (e.g., movies) from a small dataset. This challenge should take about **3 hours**, so keep your solution **simple** yet **functional**.
 
-### Example Use Case
+Example Use Case
 
-- The user inputs:  
-  *"I love thrilling action movies set in space, with a comedic twist."*  
-- Your system processes this description (query) and compares it to a dataset of items (e.g., movies with their plot summaries or keywords).  
-- You then return the **top 3–5 “closest” matches** to the user.
 
----
+User Input
+"I love thrilling action movies set in space, with a comedic twist."
 
-## Requirements
+Output
+                                       Love Actually          0.366720
+                                        Ghostbusters          0.362867
+                                              Aliens          0.306904
+   The Lord of the Rings: The Fellowship of the Ring           0.206456
+                                         Interstellar          0.205904
 
-1. **Dataset**  
-   - Use a **small** public dataset of items (e.g., a list of movies with plot summaries, or other textual descriptions).  
-   - Make sure the dataset is easy to handle (maybe 100–500 rows) so the solution remains quick to implement and run.  
-   - Include the dataset in your forked repository *or* provide instructions/link on how to download it.  
 
-2. **Approach**  
-   - **Content-Based**: At a minimum, use text similarity to recommend items.  
-     - For instance, you can transform both the user’s text input and each item’s description into TF-IDF vectors and compute **cosine similarity**.  
-   - Return the **top N** similar items (e.g., top 5).
+Dataset
 
-3. **Code Organization**  
-   - You may use a **Jupyter Notebook** or **Python scripts**.  
-   - Keep it **readable** and **modular** (e.g., one section for loading data, one for building vectors, one for computing similarity, etc.).  
-   - Briefly comment or docstring your key functions/sections.
+Source
+The dataset used in this project is a small collection of movies with their titles , plot summaries and genre . It is included in the repository as `movies.csv`.
 
-4. **Output**  
-   - When given an input description (e.g., `"I like action movies set in space"`), your system should print or return a list of recommended items (e.g., 3–5 titles).  
-   - Include the similarity score or rank if you’d like.
+Format
+The dataset contains the following columns:
+- `title`: The title of the movie.
+- `plot_summary`: A short description of the movie's plot.
+- `genre`: The genre of the movie (optional).
 
-5. **Summary & Instructions**  
-   - A short `README.md` that includes:
-     - **Dataset**: Where it’s from, any steps to load it.  
-     - **Setup**: Python version, virtual environment instructions, and how to install dependencies (`pip install -r requirements.txt`).  
-     - **Running**: How to run your code (e.g., `python recommend.py "Some user description"` or open your notebook in Jupyter).  
-     - **Results**: A brief example of your system’s output for a sample query.
+Loading the Dataset
+The dataset is loaded using `pandas`:
 
----
+```def load_data(filepath):
+    """
+    Load the dataset from a CSV file.
+    """
+    data = pd.read_csv(filepath)
+    return data```
 
-## Deliverables
+System Workflow
+1. Preprocessing:
+   - The user's input is preprocessed (e.g., lowercasing, removing stopwords).
+   - Example processed query: `"love thrilling action movie set space comedic twist"`.
 
-1. **Fork the Public Repository**  
-   - **Fork** this repo into your own GitHub account.
+2. TF-IDF Vectorization:
+   - The user's input and movie plot summaries are transformed into TF-IDF vectors.
 
-2. **Implement Your Solution**  
-   - Load and preprocess your dataset (e.g., read CSV, handle text columns).  
-   - Convert text data to vectors (e.g., TF-IDF).  
-   - Implement a function to compute similarity between the user’s query and each item’s description.  
-   - Return the top matches.
-   - Salary expectation per month (Mandatory)
+3. Cosine Similarity:
+   - Cosine similarity is computed between the user's input vector and all movie description vectors.
 
-3. **Short Video Demo**  
-   - In a `.md` file (e.g., `demo.md`) within your fork, paste a link to a **brief screen recording** (video link).  
-   - Demonstrate:
-     - How you run the recommendation code.  
-     - A sample query and the results.
+4. Top Recommendations:
+   - The system returns the top 3–5 movies with the highest similarity scores.
 
-4. **Deadline**  
-   - Submit your fork by **Sunday, Feb 23th 11:59 pm PST**.
+System Output
+The system outputs the recommended movies along with their similarity scores.
 
-> **Note**: This should be doable within ~3 hours. Keep it **straightforward**—you do **not** need advanced neural networks or complex pipelines. A simple TF-IDF + cosine similarity approach is sufficient.
+Set Up the Project
+Clone the Repository (Optional):
+If the code is hosted on GitHub, clone the repository:
 
----
 
-## Evaluation Criteria
+git clone https://github.com/your-username/movie-recommendation.git
+cd movie-recommendation
 
-1. **Functionality**  
-   - Does your code run without errors?  
-   - When given an input query, does it successfully output relevant items?
+Dataset:
+movies.csv file is placed it in the data/ folder inside the project directory.
+We can view the data by this command.
 
-2. **Code Quality**  
-   - Clear, commented code (where it counts).  
-   - Logical steps (load data → transform → recommend).
+python data_view.py
 
-3. **Clarity**  
-   - Is your `README.md` straightforward about setup, how to run, and what to expect?
+If you don’t have a dataset, you can use the example dataset provided in the repository or create your own.
 
-4. **ML/Recommendation Understanding**  
-   - Basic implementation of a content-based recommendation approach (vectorization, similarity measure).
+Project Directory Structure:
+Ensure your project directory looks like this:
 
-**We look forward to seeing your solution!** Good luck!
+movie-recommendation/
+├── data/
+│   └── movies.csv
+├── recommend.py
+├── requirements.txt
+└── README.md
+
+Step 3: Set Up a Virtual Environment (Optional but Recommended)
+Create a virtual environment:
+
+
+python -m venv venv
+Activate the virtual environment:
+
+On Windows:
+venv\Scripts\activate
+
+On macOS/Linux:
+source venv/bin/activate
+
+Step 4: Install Dependencies
+Install the required Python libraries by running:
+pip install -r requirements.txt
+
+Step 5: Run the Recommendation System
+Run the Python script:
+
+
+python recommend.py
+Enter a description of the movie you’re in the mood for when prompted. For example:
+
+
+What kind of movie are you in the mood for? Describe your preferences: I love thrilling action movies set in space.
+View the recommendations:
+The script will output the top 5 recommended movies based on your input. For example:
+
+
+Top Recommendations:
+                title  similarity_score
+2       Interstellar          0.876543
+0          Toy Story          0.654321
+1     The Dark Knight         0.543210
+
+Troubleshooting
+File Not Found Error:
+Ensure the movies.csv file is in the data/ folder and the path in the code is correct.
+
+Module Not Found Error:
+Ensure all dependencies are installed by running pip install -r requirements.txt.
+
+Empty Recommendations:
+Try a different query or check if the dataset contains relevant movies.
+
+
+
+Sample Queries
+Here are some sample queries you can use to test the movie recommendation system:
+
+Action Movies:
+"I love action-packed movies with lots of explosions and fight scenes."
+Sci-Fi Movies:
+"I’m in the mood for a sci-fi movie set in space with advanced technology."
+Comedy Movies:
+"I want to watch a funny movie that will make me laugh out loud."
+Romantic Movies:
+"I’m looking for a romantic movie with a heartfelt love story.
+Thriller Movies:
+I enjoy thrilling movies with suspense and unexpected twists."
+Adventure Movies:
+"I want to watch an adventure movie with exciting journeys and exploration."
+Drama Movies:
+"I’m in the mood for a dramatic movie with deep emotional themes."
+Family-Friendly Movies:
+"I need a family-friendly movie that’s suitable for kids."
+Horror Movies:
+"I want to watch a scary horror movie that will give me chills."
+
+Sample Output:
+Input:"I love action-packed movies with lots of explosions and fight scenes"
+
+```title  similarity_score
+112          The Dark Knight          0.511962
+121             The Avengers          0.366994
+123                Gladiator          0.220587
+3               Men in Black          0.169483
+0    Guardians of the Galaxy          0.167968```
+
+
